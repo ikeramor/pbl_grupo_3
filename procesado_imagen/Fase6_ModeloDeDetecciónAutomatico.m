@@ -38,11 +38,11 @@ for i=1:N
 I=imread(ImageLocation(1,i));
 
 %Extracción del canal verde, mejor que el rojo
-Ired=I(:,:,2);
+Igreen=I(:,:,2);
 
 %Aplicar filtro promedio para lisar la imagen
 w=ones(341)/341^2;
-Ifilter=imfilter(Ired,w);
+Ifilter=imfilter(Igreen,w);
 
 %Busqueda de minimos y sus cordenadas
 max_intensidad=max(Ifilter(:));
@@ -55,8 +55,13 @@ medianafilas=median(filas); medianacolumnas=median(columnas);
 %Coordenadas de la esquina superior izquierda del recorte (900X900)
 FilaSI = round(medianafilas - 900/2);
 ColumnaSI = round(medianacolumnas - 900/2);
+
+
+%aumentarel contraste de la imagen
+Icontraste=adapthisteq(Igreen);
+
 % RealizaR el recorte (900X900)
-Icropped = imcrop(I, [ColumnaSI FilaSI 900-1 900-1]);
+Icropped = imcrop(Icontraste, [ColumnaSI FilaSI 900-1 900-1]);
 
 
 NombArchivo = string(T{i,1}); %nombre de foto dataset original
@@ -80,8 +85,20 @@ for i=1:N
     CroppedImageLocation=[CroppedImageLocation,CroppedImagePathFinal];
 end
 CroppedImageLocation=[CroppedImageLocation(2:end)];
+% ELIMINACIÓN VASOS SANGUINEOS
+
+
+% 
+% 
 % Segmentación
+% Filtrado mediano de las imagenes recortadas
+
+%ordfilt2(Icropped,5,ones(15,15))
 % Disco óptico
 
+ICropped=imread("CroppedImages\image_0069.jpg");
+ISegm=imsegkmeans(ICropped,3);
 
+subplot(1,2,1);imshow(ICropped,[]);
+subplot(1,2,2);imshow(ISegm,[]);
 % Copa óptica
