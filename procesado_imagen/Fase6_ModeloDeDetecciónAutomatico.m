@@ -1,9 +1,9 @@
-%% Fase 6: Modelo de detecciÛn autom·tica
+%% Fase 6: Modelo de detecci√≥n autom√°tica
 %% 
-% La extracciÛn de caracterÌsticas es una parte fundamental en la aplicaciÛn 
-% de cualquier tÈcnica de Machine Learning. El objetivo de esta etapa es identificar 
-% patrones discriminativos en las im·genes OCT que permitan a los modelos de clasificaciÛn 
-% aprender quÈ valores de dichos patrones se asocian a una clase u otra, es decir, 
+% La extracci√≥n de caracter√≠sticas es una parte fundamental en la aplicaci√≥n 
+% de cualquier t√©cnica de Machine Learning. El objetivo de esta etapa es identificar 
+% patrones discriminativos en las im√°genes OCT que permitan a los modelos de clasificaci√≥n 
+% aprender qu√© valores de dichos patrones se asocian a una clase u otra, es decir, 
 % a un paciente sano o a uno enfermo
 
 close all; clear all;
@@ -19,7 +19,7 @@ end
 [N, P]=size(T);%dimensiones nueva tabla
 variables=T.Properties.VariableNames;
 %% 
-% UbicaciÛn de las imagenes
+% Ubicaci√≥n de las imagenes
 
 ImagePath=fullfile('images');
 ImageLocation='';
@@ -29,15 +29,15 @@ for i=1:N
     ImageLocation=[ImageLocation,ImagePathFinal];
 end
 ImageLocation=[ImageLocation(2:end)];
-% ExtracciÛn regiÛn de interes (ROI)
-% El glaucoma impacta la regiÛn del nervio Ûptico que se sit˙a en la secciÛn 
-% m·s brillante de la imagen. Por lo tanto, todo dato fuera de esta ·rea no aporta 
-% informaciÛn relevante y pueden ser descartado.
+% Extracci√≥n regi√≥n de interes (ROI)
+% El glaucoma impacta la regi√≥n del nervio √≥ptico que se sit√∫a en la secci√≥n 
+% m√°s brillante de la imagen. Por lo tanto, todo dato fuera de esta √°rea no aporta 
+% informaci√≥n relevante y pueden ser descartado.
 
 for i=1:N
 I=imread(ImageLocation(1,i));
 
-%ExtracciÛn del canal verde, mejor que el rojo
+%Extracci√≥n del canal verde, mejor que el rojo
 Ired=I(:,:,2);
 
 %Aplicar filtro promedio para lisar la imagen
@@ -58,6 +58,7 @@ ColumnaSI = round(medianacolumnas - 900/2);
 % RealizaR el recorte (900X900)
 Icropped = imcrop(I, [ColumnaSI FilaSI 900-1 900-1]);
 
+
 NombArchivo = string(T{i,1}); %nombre de foto dataset original
 %NombArchivo = sprintf('imagen_recortada_%d.png', i);%nombre de foto de 1 a N
 path = fullfile('CroppedImages', NombArchivo);
@@ -66,3 +67,21 @@ end
 %% 
 % Las imagenes recortadas incorrectamente seran eliminadas y no se tendran en 
 % cuenta. Estos son 11 de las 149 que se tienen (el 7%).
+
+
+%% 
+% Ubicaci√≥n de las imagenes cropeadas
+
+CroppedImagePath=fullfile('CroppedImages');
+CroppedImageLocation='';
+for i=1:N
+    str=string(T{i,1});
+    CroppedImagePathFinal=fullfile(CroppedImagePath,str);
+    CroppedImageLocation=[CroppedImageLocation,CroppedImagePathFinal];
+end
+CroppedImageLocation=[CroppedImageLocation(2:end)];
+% Segmentaci√≥n
+% Disco √≥ptico
+
+
+% Copa √≥ptica
