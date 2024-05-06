@@ -58,10 +58,10 @@ ColumnaSI = round(medianacolumnas - 900/2);
 
 
 %aumentarel contraste de la imagen
-Icontraste=adapthisteq(Igreen);
+%Icontraste=adapthisteq(Igreen);
 
 % RealizaR el recorte (900X900)
-Icropped = imcrop(Icontraste, [ColumnaSI FilaSI 900-1 900-1]);
+Icropped = imcrop(Igreen, [ColumnaSI FilaSI 900-1 900-1]);
 
 
 NombArchivo = string(T{i,1}); %nombre de foto dataset original
@@ -87,18 +87,57 @@ end
 CroppedImageLocation=[CroppedImageLocation(2:end)];
 % ELIMINACIÓN VASOS SANGUINEOS
 
+for i=1:N
+I0=imread(ImageLocation(i));
+IR=I0(:,:,1);IG=I0(:,:,2);IB=I0(:,:,3);
 
-% 
-% 
+ElemEstrukt=strel("disk",15);%bajar 
+%1. Dilatacion
+IdilateR=imdilate(IR,ElemEstrukt);IdilateG=imdilate(IG,ElemEstrukt);IdilateB=imdilate(IB,ElemEstrukt);
+%2. Erosion
+IerodeR=imerode(IdilateR,ElemEstrukt);IerodeG=imerode(IdilateG,ElemEstrukt);IerodeB=imerode(IdilateB,ElemEstrukt);
+Inew=I0;
+Inew(:,:,1)=IerodeR;Inew(:,:,2)=IerodeG;Inew(:,:,3)=IerodeB;
+%3. Grayscale
+IGray=rgb2gray(Inew);
+
+NombArchivo = string(T{i,1}); %nombre de foto dataset original
+path = fullfile('NoVeinsImages', NombArchivo);
+imwrite(IGray, path); %meter las imagenes cropeadas en una carpeta
+end
+%% 
+% Ubicación de las imagenes sin vasos
+
+NVImagePath=fullfile('NoVeinsImages');
+NVImageLocation='';
+for i=1:N
+    str=string(T{i,1});
+    NVImagePathFinal=fullfile(NVImagePath,str);
+    NVImageLocation=[NVImageLocation,NVImagePathFinal];
+end
+NVImageLocation=[NVImageLocation(2:end)];
 % Segmentación
 % Filtrado mediano de las imagenes recortadas
 
 %ordfilt2(Icropped,5,ones(15,15))
 % Disco óptico
 
-ICropped=imread("CroppedImages\image_0069.jpg");
-ISegm=imsegkmeans(ICropped,3);
+ICropped=imread("NoVeinsImages\image_0009.jpg");
 
-subplot(1,2,1);imshow(ICropped,[]);
-subplot(1,2,2);imshow(ISegm,[]);
+%min(ICropped(:))%las imagenes con la retina al borde tienen como valor minimo 0-->cropear mas para que la segmentación vaya bien
+
+ICroppedd=medfilt2(ICropped,[15 15]);%suavizado filtro de mediana
+ISegm=imsegkmeans(ICroppedd,4);
+
+%Closing
+ElemEstrukt=strel("disk",30);
+Idilate=imdilate(ISegm,ElemEstrukt);
+Ierode=imerode(Idilate,ElemEstrukt);
+Iclosing=Ierode;
+
+subplot(1,3,1);imshow(ICropped,[]);
+subplot(1,3,2);imshow(ISegm,[]);
+subplot(1,3,3);imshow(Iclosing,[]);
+
+
 % Copa óptica
