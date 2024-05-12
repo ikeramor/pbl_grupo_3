@@ -64,12 +64,19 @@ imagesc(ismissing(T));
 xticks(1:P);xticklabels(variables);
 title('Missingness map');xlabel('Variable');ylabel('Data sample');set(gca,"XGrid","off","YGrid","on");
 %% 
-% No falta 
+% No hay dato alguno que falte.
 %% 
-% Images distribution
+% Distribución de todas las imagenes
 
 TQcategorical=categorical(T.quality,[0,1,2,3,4],{'Unrevised','Bajo Contraste','Desenfoque','Ruido','Correcto'});
 histogram(categorical(TQcategorical))
+%% 
+% Distribución de las imagenes revisadas
+
+close all;
+TQcategorical2=categorical(T.quality,[1,2,3,4],{'Bajo Contraste','Desenfoque','Ruido','Calidad Correcta'});
+histogram(categorical(TQcategorical2))
+set(gca,"XGrid","off","YGrid","on");
 %% 
 % Correlation matrix
 
@@ -85,6 +92,16 @@ corrplot(Tcorr)
 T.Laplacianmean=[];
 [N, P]=size(T);%nuevas dimensiones
 variables=T.Properties.VariableNames;
+%% 
+% Histogramas de las distintas calidades
+
+close all;
+IBajoContraste=imread("images\image_0204.jpg");ICorrect=imread("images\image_0003.jpg");IRuido=imread("images\image_0230.jpg");IDesenfoque=imread("images\image_0023.jpg");
+
+subplot(2,2,1);imhist(IBajoContraste)
+subplot(2,2,2);imhist(ICorrect)
+subplot(2,2,3);imhist(IRuido)
+subplot(2,2,4);imhist(IDesenfoque)
 %% 
 % Para el desarrollo del modelo tan solo se utilizaran las imagenes revisadas. 
 % Más tarde el modelo desarrollado servira para predecir la calidad de las imagenes 
@@ -134,3 +151,5 @@ end
 TCorrect.Entropy=[];TCorrect.Contrast=[];TCorrect.TarteDinamiko=[];TCorrect.Laplacianmean=[];TCorrect.Laplacianmax=[];TCorrect.Laplacianvar=[];
 %%
 writetable(TCorrect,'TCorrect.csv')
+%% 
+%
