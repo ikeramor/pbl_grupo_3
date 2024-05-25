@@ -44,7 +44,7 @@ Igreen=I(:,:,2);
 w=ones(341)/341^2;
 Ifilter=imfilter(Igreen,w);
 
-%Busqueda de minimos y sus cordenadas
+%Busqueda de maximos y sus cordenadas
 max_intensidad=max(Ifilter(:));
 [filas, columnas] = find(Ifilter == max_intensidad);
 punto_central = [round(mean(filas)), round(mean(columnas))];
@@ -61,7 +61,7 @@ ColumnaSI = round(medianacolumnas - 900/2);
 %Icontraste=adapthisteq(Igreen);
 
 % RealizaR el recorte (900X900)
-Icropped = imcrop(Igreen, [ColumnaSI FilaSI 900-1 900-1]);
+Icropped = imcrop(I, [ColumnaSI FilaSI 900-1 900-1]);
 
 
 NombArchivo = string(T{i,1}); %nombre de foto dataset original
@@ -71,9 +71,17 @@ imwrite(Icropped, path); %meter las imagenes cropeadas en una carpeta
 end
 %% 
 % Las imagenes recortadas incorrectamente seran eliminadas y no se tendran en 
-% cuenta. Estos son 11 de las 149 que se tienen (el 7%).
+% cuenta. Estos son aproximadamente el 10%
 
+MalCorte=[145, 99, 89, 74, 66, 62, 43, 28, 19, 5];
+MalCorte=sort(MalCorte,'descend');
 
+for i=1:length(MalCorte)
+num=MalCorte(1,i);
+T(num,:)=[];
+end
+[N, P]=size(T);%dimensiones nueva tabla
+variables=T.Properties.VariableNames;
 %% 
 % Ubicación de las imagenes cropeadas
 
@@ -88,24 +96,27 @@ CroppedImageLocation=[CroppedImageLocation(2:end)];
 % ELIMINACIÓN VASOS SANGUINEOS
 
 for i=1:N
-I0=imread(ImageLocation(i));
-IR=I0(:,:,1);IG=I0(:,:,2);IB=I0(:,:,3);
+I_v=imread(CroppedImageLocation(1,i));Igr_v=I_v(:,:,2);%green channel
 
-ElemEstrukt=strel("disk",15);%bajar 
-%1. Dilatacion
-IdilateR=imdilate(IR,ElemEstrukt);IdilateG=imdilate(IG,ElemEstrukt);IdilateB=imdilate(IB,ElemEstrukt);
-%2. Erosion
-IerodeR=imerode(IdilateR,ElemEstrukt);IerodeG=imerode(IdilateG,ElemEstrukt);IerodeB=imerode(IdilateB,ElemEstrukt);
-Inew=I0;
-Inew(:,:,1)=IerodeR;Inew(:,:,2)=IerodeG;Inew(:,:,3)=IerodeB;
-%3. Grayscale
-IGray=rgb2gray(Inew);
+ElemEstrukt=strel('disk',20);BH=imbothat(Igr_v,ElemEstrukt);BH=BH>15;%Vessels' mask with a bottomhat
+ElemEstrukt=strel('disk',5);BH=imerode(BH,ElemEstrukt);%noise removal
+ElemEstrukt=strel('disk',10);BH=imdilate(BH,ElemEstrukt);%se dilata la mascara para quitar mejor las venas
+NV_0 = inpaintCoherent(I_v,BH,'radius',30);%Con la mascara y la imafen original se quitan los vasos sanguineos
 
-NombArchivo = string(T{i,1}); %nombre de foto dataset original
+%Realizamos una vez mas para mejorar la eliminacion de los vasos
+Ig=NV_0(:,:,2);
+
+ElemEstrukt=strel('disk',20);BH=imbothat(Ig,ElemEstrukt);BH=BH>15;
+ElemEstrukt=strel('disk',5);BH=imerode(BH,ElemEstrukt);
+ElemEstrukt=strel('disk',10);BH=imdilate(BH,ElemEstrukt);
+NV = inpaintCoherent(NV_0,BH,'radius',30);
+
+NombArchivo = string(T{i,1}); 
 path = fullfile('NoVeinsImages', NombArchivo);
-imwrite(IGray, path); %meter las imagenes cropeadas en una carpeta
+imwrite(NV, path); %meter las imagenes nuevas en una carpeta
 end
-%% 
+%%
+
 % Ubicación de las imagenes sin vasos
 
 NVImagePath=fullfile('NoVeinsImages');
@@ -116,28 +127,117 @@ for i=1:N
     NVImageLocation=[NVImageLocation,NVImagePathFinal];
 end
 NVImageLocation=[NVImageLocation(2:end)];
+% FEATURE EXTRACTIONS
+% Color moments
+% for i=1:N
+% 
+% Ic=double(imread(ImageLocation(1,i)));
+% 
+% Ic_r=Ic(:,:,1);
+% 
+% Ic_g=Ic(:,:,2);
+% 
+% Ic_b=Ic(:,:,3);
+% 
+% %Media (mean)
+% 
+% T.Media_Red(i,1)=mean(Ic_r);
+% 
+% T.Media_Green(i,1)=mean(Ic_g);
+% 
+% T.Media_Blue(i,1)=mean(Ic_b);
+% 
+% %Desviación estándar (standard deviation)
+% 
+% T.Desviac_Red(i,1)=std2(Ic_r);
+% 
+% T.Desviac_Green(i,1)=std2(Ic_g);
+% 
+% T.Desviac_Blue(i,1)=std2(Ic_b);
+% 
+% %Asimetria (skewness)
+% 
+% T.Asimetria_Red(i,1)=skewness(Ic_r);
+% 
+% T.Asimetria_Green(i,1)=skewness(Ic_g);
+% 
+% T.Asimetria_Blue(i,1)=skewness(Ic_b);
+% 
+% end
 % Segmentación
-% Filtrado mediano de las imagenes recortadas
-
-%ordfilt2(Icropped,5,ones(15,15))
 % Disco óptico
 
-ICropped=imread("NoVeinsImages\image_0009.jpg");
+for i=1:N
+    I_NV=imread(NVImageLocation(1,i));
+    I_NV_gray=rgb2gray(I_NV);
+    I_NV_gray_adj=imadjust(I_NV_gray);
+    
+    
+    if any(I_NV_gray(:)==0) %imagenes con pixeles negros se segmentan mal, segmentar de otra manera
+        Treeshold = multithresh(I_NV_gray_adj,3);
+        Segm=I_NV_gray_adj>Treeshold(3);
+    else
+        Treeshold = multithresh(I_NV_gray_adj,4);
+        Segm=I_NV_gray_adj>Treeshold(3);
+ 
+    end
+    
+    ElemEstrukt=strel('disk',20);Segm=imopen(Segm,ElemEstrukt);
+    Segm=bwareafilt(Segm,1);
+    Segm=imfill(Segm,'holes');
+    ElemEstrukt=strel('disk',120);
+    Segm=imclose(Segm,ElemEstrukt);
+    
+    NombArchivo = string(T{i,1}); %nombre de foto dataset original
+    %NombArchivo = sprintf('imagen_recortada_%d.png', i);%nombre de foto de 1 a N
+    path = fullfile('SegmentacionDisco', NombArchivo);
+    imwrite(Segm, path); %meter las imagenes cropeadas en una carpeta
+end
 
-%min(ICropped(:))%las imagenes con la retina al borde tienen como valor minimo 0-->cropear mas para que la segmentación vaya bien
-
-ICroppedd=medfilt2(ICropped,[15 15]);%suavizado filtro de mediana
-ISegm=imsegkmeans(ICroppedd,4);
-
-%Closing
-ElemEstrukt=strel("disk",30);
-Idilate=imdilate(ISegm,ElemEstrukt);
-Ierode=imerode(Idilate,ElemEstrukt);
-Iclosing=Ierode;
-
-subplot(1,3,1);imshow(ICropped,[]);
-subplot(1,3,2);imshow(ISegm,[]);
-subplot(1,3,3);imshow(Iclosing,[]);
-
-
+SImagePath=fullfile('SegmentacionDisco');
+SImageLocation='';
+for i=1:N
+    str=string(T{i,1});
+    SImagePathFinal=fullfile(SImagePath,str);
+    SImageLocation=[SImageLocation,SImagePathFinal];
+end
+SImageLocation=[SImageLocation(2:end)];
 % Copa óptica
+
+for i=1:N
+    I_NV=imread(NVImageLocation(1,i));
+    I_NV_gray=rgb2gray(I_NV);
+    I_NV_gray_adj=imadjust(I_NV_gray);
+    
+    
+    if any(I_NV_gray(:)==0) %imagenes con pixeles negros se segmentan mal, segmentar de otra manera
+        Treeshold = multithresh(I_NV_gray_adj,5);
+        Segm=I_NV_gray_adj>Treeshold(5);
+    else
+        
+        Treeshold = multithresh(I_NV_gray_adj,4);
+        Segm=I_NV_gray_adj>Treeshold(4);
+    end
+    
+    ElemEstrukt=strel('disk',20);Segm=imopen(Segm,ElemEstrukt);
+    Segm=bwareafilt(Segm,1);
+    Segm=imfill(Segm,'holes');
+    ElemEstrukt=strel('disk',250);
+    Segm=imclose(Segm,ElemEstrukt);
+    
+    NombArchivo = string(T{i,1}); %nombre de foto dataset original
+    %NombArchivo = sprintf('imagen_recortada_%d.png', i);%nombre de foto de 1 a N
+    path = fullfile('SegmentacionCopa', NombArchivo);
+    imwrite(Segm, path); %meter las imagenes cropeadas en una carpeta
+end
+
+SCImagePath=fullfile('SegmentacionCopa');
+SCImageLocation='';
+for i=1:N
+    str=string(T{i,1});
+    SCImagePathFinal=fullfile(SCImagePath,str);
+    SCImageLocation=[SCImageLocation,SCImagePathFinal];
+end
+SCImageLocation=[SCImageLocation(2:end)];
+%% 
+%

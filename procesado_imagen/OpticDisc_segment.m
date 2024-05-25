@@ -44,8 +44,8 @@ NVImageLocation=[NVImageLocation(2:end)];
 %%
 clc;close all;
 
-I_V=imread(ImageLocation(1,84)); subplot(2,3,1); imshow(I_V,[]);
-I_NV=imread(NVImageLocation(1,84));subplot(2,3,2);imshow(I_NV,[]);
+I_V=imread(ImageLocation(1,10)); subplot(2,3,1); imshow(I_V,[]);
+I_NV=imread(NVImageLocation(1,10));subplot(2,3,2);imshow(I_NV,[]);
 I_NV_gray=rgb2gray(I_NV);subplot(2,3,3);imshow(I_NV_gray,[]);
 I_NV_gray=imadjust(I_NV_gray);
 subplot(2,3,4);imhist(I_NV_gray);
@@ -63,23 +63,32 @@ subplot(2,3,6);imshow(Segm_2,[]);
 ElemEstrukt=strel('disk',10);Segm_imp=imopen(Segm,ElemEstrukt);
 ElemEstrukt=strel('disk',20);Segm_imp=imclose(Segm_imp,ElemEstrukt);%probar imfill
 subplot(2,3,5);imshow(Segm_imp,[]);
-
+%%
 for i=1:N
-I_NV=imread(NVImageLocation(1,i));
-I_NV_gray=rgb2gray(I_NV);
-I_NV_gray=imadjust(I_NV_gray);
-
-Treeshold = multithresh(I_NV_gray,4);
-Segm=I_NV_gray>Treeshold(3);
-ElemEstrukt=strel('disk',20);Segm=imopen(Segm,ElemEstrukt);
-Segm=bwareafilt(Segm,1);
-Segm=imfill(Segm,'holes');
-%ElemEstrukt=strel('disk',20);Segm=imclose(Segm,ElemEstrukt);
-
-NombArchivo = string(T{i,1}); %nombre de foto dataset original
-%NombArchivo = sprintf('imagen_recortada_%d.png', i);%nombre de foto de 1 a N
-path = fullfile('SegmentacionDisco', NombArchivo);
-imwrite(Segm, path); %meter las imagenes cropeadas en una carpeta
+    I_NV=imread(NVImageLocation(1,i));
+    I_NV_gray=rgb2gray(I_NV);
+    I_NV_gray_adj=imadjust(I_NV_gray);
+    
+    
+    if any(I_NV_gray(:)==0) %imagenes con pixeles negros se segmentan mal, segmentar de otra manera
+        Treeshold = multithresh(I_NV_gray_adj,3);
+        Segm=I_NV_gray_adj>Treeshold(3);
+    else
+        Treeshold = multithresh(I_NV_gray_adj,4);
+        Segm=I_NV_gray_adj>Treeshold(3);
+ 
+    end
+    
+    ElemEstrukt=strel('disk',20);Segm=imopen(Segm,ElemEstrukt);
+    Segm=bwareafilt(Segm,1);
+    Segm=imfill(Segm,'holes');
+    ElemEstrukt=strel('disk',120);
+    Segm=imclose(Segm,ElemEstrukt);
+    
+    NombArchivo = string(T{i,1}); %nombre de foto dataset original
+    %NombArchivo = sprintf('imagen_recortada_%d.png', i);%nombre de foto de 1 a N
+    path = fullfile('SegmentacionDisco', NombArchivo);
+    imwrite(Segm, path); %meter las imagenes cropeadas en una carpeta
 end
 
 SImagePath=fullfile('SegmentacionDisco');
@@ -90,6 +99,7 @@ for i=1:N
     SImageLocation=[SImageLocation,SImagePathFinal];
 end
 SImageLocation=[SImageLocation(2:end)];
+
 %% 
 % 
 % 
