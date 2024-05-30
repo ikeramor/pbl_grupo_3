@@ -73,7 +73,7 @@ end
 % Las imagenes recortadas incorrectamente seran eliminadas y no se tendran en 
 % cuenta. Estos son aproximadamente el 10%
 
-MalCorte=[145, 99, 89, 74, 66, 62, 43, 28, 19, 5];
+MalCorte=[145, 99, 89, 74, 66, 62, 43, 28, 19, 5]; %78   265   350   513   755   805   883   1020   1098   1537
 MalCorte=sort(MalCorte,'descend');
 
 for i=1:length(MalCorte)
@@ -116,9 +116,7 @@ path = fullfile('NoVeinsImages', NombArchivo);
 imwrite(NV, path); %meter las imagenes nuevas en una carpeta
 end
 %%
-
 % Ubicación de las imagenes sin vasos
-
 NVImagePath=fullfile('NoVeinsImages');
 NVImageLocation='';
 for i=1:N
@@ -129,41 +127,49 @@ end
 NVImageLocation=[NVImageLocation(2:end)];
 % FEATURE EXTRACTIONS
 % Color moments
-% for i=1:N
-% 
-% Ic=double(imread(ImageLocation(1,i)));
-% 
-% Ic_r=Ic(:,:,1);
-% 
-% Ic_g=Ic(:,:,2);
-% 
-% Ic_b=Ic(:,:,3);
-% 
-% %Media (mean)
-% 
-% T.Media_Red(i,1)=mean(Ic_r);
-% 
-% T.Media_Green(i,1)=mean(Ic_g);
-% 
-% T.Media_Blue(i,1)=mean(Ic_b);
-% 
-% %Desviación estándar (standard deviation)
-% 
-% T.Desviac_Red(i,1)=std2(Ic_r);
-% 
-% T.Desviac_Green(i,1)=std2(Ic_g);
-% 
-% T.Desviac_Blue(i,1)=std2(Ic_b);
-% 
-% %Asimetria (skewness)
-% 
-% T.Asimetria_Red(i,1)=skewness(Ic_r);
-% 
-% T.Asimetria_Green(i,1)=skewness(Ic_g);
-% 
-% T.Asimetria_Blue(i,1)=skewness(Ic_b);
-% 
-% end
+
+for i=1:N
+    Ic=double(imread(ImageLocation(1,i)));
+    Ic_r=Ic(:,:,1);
+    Ic_g=Ic(:,:,2);
+    Ic_b=Ic(:,:,3);
+    %Media (mean)
+    T.Media_Red(i,1)=mean(Ic_r(:));
+    T.Media_Green(i,1)=mean(Ic_g(:));
+    T.Media_Blue(i,1)=mean(Ic_b(:));
+    %Desviación estándar (standard deviation)
+    T.Desviac_Red(i,1)=std2(Ic_r);
+    T.Desviac_Green(i,1)=std2(Ic_g);
+    T.Desviac_Blue(i,1)=std2(Ic_b);
+    %Asimetria (skewness)
+    T.Asimetria_Red(i,1)=skewness(Ic_r(:));
+    T.Asimetria_Green(i,1)=skewness(Ic_g(:));
+    T.Asimetria_Blue(i,1)=skewness(Ic_b(:));
+end
+% Gray Level Covariance Matrix
+
+%After obtaining the GLCM of an image, the different properties  are  extracted like Contrast, Correlation, Energy and  Homogeneity.
+%Contrast is used to measure the variations,  Correlations measures the probability of the particular pair of  pixels  occur...
+%Energy measures the uniformity and  Homogeneity measures how closely the elements are  distributed in the matrix.   
+%graycomatrix
+for i=1:N
+    I_read=imread(ImageLocation(1,i));
+    I_read_gray=rgb2gray(I_read);
+    I_glcm=graycomatrix(I_read_gray);
+
+    GrayProps=graycoprops(I_glcm);
+
+    T.Contraste_glcm(i,1)=GrayProps.Contrast;
+    T.Correlacion_glcm(i,1)=GrayProps.Correlation;
+    T.Energia_glcm(i,1)=GrayProps.Energy;
+    T.Homogeneidad_glcm(i,1)=GrayProps.Homogeneity;
+end
+% Markov Random Field Least Estimates 
+
+%T.Contraste_glcm=[]%T.Correlacion_glcm=[]%T.Energia_glcm=[]%T.Homogeneidad_glcm=[]
+% Wavelet
+
+
 % Segmentación
 % Disco óptico
 
@@ -185,13 +191,15 @@ for i=1:N
     ElemEstrukt=strel('disk',20);Segm=imopen(Segm,ElemEstrukt);
     Segm=bwareafilt(Segm,1);
     Segm=imfill(Segm,'holes');
-    ElemEstrukt=strel('disk',120);
+    ElemEstrukt=strel('disk',250);
     Segm=imclose(Segm,ElemEstrukt);
     
     NombArchivo = string(T{i,1}); %nombre de foto dataset original
-    %NombArchivo = sprintf('imagen_recortada_%d.png', i);%nombre de foto de 1 a N
     path = fullfile('SegmentacionDisco', NombArchivo);
     imwrite(Segm, path); %meter las imagenes cropeadas en una carpeta
+
+    T.OpticDisc_area(i,1)=sum(Segm(:));
+
 end
 
 SImagePath=fullfile('SegmentacionDisco');
@@ -214,7 +222,6 @@ for i=1:N
         Treeshold = multithresh(I_NV_gray_adj,5);
         Segm=I_NV_gray_adj>Treeshold(5);
     else
-        
         Treeshold = multithresh(I_NV_gray_adj,4);
         Segm=I_NV_gray_adj>Treeshold(4);
     end
@@ -223,12 +230,14 @@ for i=1:N
     Segm=bwareafilt(Segm,1);
     Segm=imfill(Segm,'holes');
     ElemEstrukt=strel('disk',250);
-    Segm=imclose(Segm,ElemEstrukt);
-    
+    Segm=imclose(Segm,ElemEstrukt);  
+
     NombArchivo = string(T{i,1}); %nombre de foto dataset original
-    %NombArchivo = sprintf('imagen_recortada_%d.png', i);%nombre de foto de 1 a N
     path = fullfile('SegmentacionCopa', NombArchivo);
     imwrite(Segm, path); %meter las imagenes cropeadas en una carpeta
+
+    T.OpticCup_area(i,1)=sum(Segm(:));
+
 end
 
 SCImagePath=fullfile('SegmentacionCopa');
@@ -239,5 +248,34 @@ for i=1:N
     SCImageLocation=[SCImageLocation,SCImagePathFinal];
 end
 SCImageLocation=[SCImageLocation(2:end)];
-%% 
-%
+% Copa y Disco
+
+for i=1:N
+    DiscoSegm=imread(SImageLocation(1,i));CopaSegm=imread(SCImageLocation(1,i));
+    CopaDiscoSegm=imfuse(CopaSegm,DiscoSegm,"blend"); %blend: superponer la copa y el disco con composicion alfa 
+
+    NombArchivo = string(T{i,1}); %nombre de foto dataset original
+    path = fullfile('SegmentacionCopaDisco', NombArchivo);
+    imwrite(CopaDiscoSegm, path); %meter las imagenes cropeadas en una carpeta
+
+    disc=T.OpticDisc_area(i,1);cup=T.OpticCup_area(i,1);
+    T.Ratio_DiscCup(i,1)=cup/disc;
+end
+
+SCDImagePath=fullfile('SegmentacionCopaDisco');
+SCDImageLocation='';
+for i=1:N
+    str=string(T{i,1});
+    SCDImagePathFinal=fullfile(SCImagePath,str);
+    SCDImageLocation=[SCDImageLocation,SCDImagePathFinal];
+end
+SCDImageLocation=[SCDImageLocation(2:end)];
+% MACHINE LEARNING
+% Con la aplicación de MATLAB "classification learner"  se entrenaran diversos 
+% modelos y se seleccionarán los que mejor predicciones hagan. La division de 
+% datos se realizara por medio del metodo Cross validation (en 5 iteraciones).
+
+%load("FineGaussianSVM.mat")
+%[ypred,scores] = FineGaussianSVM.mat.predictFcn(Tunrevised);%primera predicción
+%ypred
+%Hacerlo con las no revisadas (TODO)
