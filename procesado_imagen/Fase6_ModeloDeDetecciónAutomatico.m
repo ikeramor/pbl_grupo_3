@@ -1,10 +1,11 @@
 %% Fase 6: Modelo de detección automática
-%% 
 % La extracción de características es una parte fundamental en la aplicación 
 % de cualquier técnica de Machine Learning. El objetivo de esta etapa es identificar 
 % patrones discriminativos en las imágenes OCT que permitan a los modelos de clasificación 
 % aprender qué valores de dichos patrones se asocian a una clase u otra, es decir, 
 % a un paciente sano o a uno enfermo
+%% 
+% 
 
 close all; clear all;
 T0=readtable('metadata.csv');
@@ -30,6 +31,7 @@ for i=1:N
 end
 ImageLocation=[ImageLocation(2:end)];
 % Extracción región de interes (ROI)
+
 % El glaucoma impacta la región del nervio óptico que se sitúa en la sección 
 % más brillante de la imagen. Por lo tanto, todo dato fuera de esta área no aporta 
 % información relevante y pueden ser descartado.
@@ -95,6 +97,7 @@ end
 CroppedImageLocation=[CroppedImageLocation(2:end)];
 % ELIMINACIÓN VASOS SANGUINEOS
 
+
 for i=1:N
 I_v=imread(CroppedImageLocation(1,i));Igr_v=I_v(:,:,2);%green channel
 
@@ -115,8 +118,9 @@ NombArchivo = string(T{i,1});
 path = fullfile('NoVeinsImages', NombArchivo);
 imwrite(NV, path); %meter las imagenes nuevas en una carpeta
 end
-%%
+%% 
 % Ubicación de las imagenes sin vasos
+
 NVImagePath=fullfile('NoVeinsImages');
 NVImageLocation='';
 for i=1:N
@@ -125,11 +129,11 @@ for i=1:N
     NVImageLocation=[NVImageLocation,NVImagePathFinal];
 end
 NVImageLocation=[NVImageLocation(2:end)];
-% FEATURE EXTRACTIONS
+%% FEATURE EXTRACTIONS
 % Color moments
 
 for i=1:N
-    Ic=double(imread(ImageLocation(1,i)));
+    Ic=double(imread(CroppedImageLocation(1,i)));
     Ic_r=Ic(:,:,1);
     Ic_g=Ic(:,:,2);
     Ic_b=Ic(:,:,3);
@@ -153,7 +157,7 @@ end
 %Energy measures the uniformity and  Homogeneity measures how closely the elements are  distributed in the matrix.   
 %graycomatrix
 for i=1:N
-    I_read=imread(ImageLocation(1,i));
+    I_read=imread(CroppedImageLocation(1,i));
     I_read_gray=rgb2gray(I_read);
     I_glcm=graycomatrix(I_read_gray);
 
@@ -169,7 +173,22 @@ end
 %T.Contraste_glcm=[]%T.Correlacion_glcm=[]%T.Energia_glcm=[]%T.Homogeneidad_glcm=[]
 % Wavelet
 
-
+for w=1:N
+    I_wavelet=imread(CroppedImageLocation(1,w));
+    [cA,cH,cV,cD]=dwt2(I,);%cA: approximation coeff, cH: horizontal detaiel coeff, cV: vertical detail coeff, cD: Diagonal detail coefficients
+    
+    %Feature extraction from Wavelet transform
+    Contraste_wavelet=0;Energia_wavelet=0; Desemejanza_wavelet=0;Homogeneidad_wavelet=0;
+    for i = 1:size(I_wavelet, 1)
+        for j = 1:size(I_wavelet, 2)
+        Contraste_wavelet=((abs(i-j))^2)*I_wavelet(i,j)+Contraste_wavelet;
+        Energia_wavelet=(I_wavelet(i,j))^2+Energia_wavelet;
+        Desemejanza_wavelet=abs(i-j)*I_wavelet(i,j)+Desemejanza_wavelet;
+        Homogeneidad_wavelet=Homogeneidad_wavelet+I_wavelet(i,j)/(1+(i-j)^2);
+        end
+    end
+    Entropia_wavelet=entropy(I_wavelet);
+end
 % Segmentación
 % Disco óptico
 
@@ -270,11 +289,12 @@ for i=1:N
     SCDImageLocation=[SCDImageLocation,SCDImagePathFinal];
 end
 SCDImageLocation=[SCDImageLocation(2:end)];
-% MACHINE LEARNING
+%% MACHINE LEARNING
+
 % Con la aplicación de MATLAB "classification learner"  se entrenaran diversos 
 % modelos y se seleccionarán los que mejor predicciones hagan. La division de 
 % datos se realizara por medio del metodo Cross validation (en 5 iteraciones).
-
+%%
 %load("FineGaussianSVM.mat")
 %[ypred,scores] = FineGaussianSVM.mat.predictFcn(Tunrevised);%primera predicción
 %ypred
