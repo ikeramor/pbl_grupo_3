@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;1,200;1,300;1,400&display=swap');
+
+* {
+	font-family: Montserrat;
+	text-decoration:none;
+	outline: none;
+	margin:0;
+	padding:0;
+	box-sizing:border-box;
+}
+
+html {
+	font-size: 62.5%;
+	overflow-x: hidden; /*"hidden" significa que cualquier contenido que se desborde horizontalmente (es decir, que sea más ancho que el contenedor) será ocultado*/
+}
+
+body {
+	background:#2c345e;; 
+}
+
+header {
+	width:100%;
+	position:fixed;
+	background:#161e4a;
+	display:flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 1rem 2rem;
+	z-index: 1000;
+	transition: .2s;
+}
+
+header .navbar ul {
+	display:flex;
+	align-items: center;
+	justify-content: space-between;
+	list-style:none;
+}
+
+header .navbar ul li {
+	margin: 0 1rem;
+}
+
+header .navbar ul li a {
+	font-size: 2rem;
+	color:#fff;
+	transition: .2s;
+}
+
+header .navbar ul li .active,
+header .navbar ul li a:hover {
+	color:#ff046f;
+}
+
+header .logo {
+	font-size: 1.5 rem;
+	color:#fff;
+	text-transform:uppercase
+}
+.info {
+    background: #2c345e;
+    height: 50vh; /* Ajustamos la altura al 100% del viewport */
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    display: flex; /* Convertimos el contenedor en un contenedor flexible */
+    /*align-items: center;  Centramos verticalmente el contenido */
+}
+
+.info .content {
+    display: flex;
+	/*align-items: center;*/
+	justify-content: center;
+	flex-flow: column;
+	justify-content:center; 
+    width: 100%; /* Ajustamos el ancho al 100% */
+}
+
+.info h1{
+	font-size: 4rem;
+	color: #fff;
+	text-shadow: 0 .3rem .5rem rgba(0,0,0,.3);
+	text-transform: uppercase; 
+}
+
+.info p {
+	color: #fff;
+	margin-top: 10px; /* Espacio entre el título y el texto */
+	font-size: 2rem;
+	text-align: center;
+	margin-left: 50px ; 
+	margin-right: 50px; 
+}
+
+/*galucoma*/
+
+
+.glaucoma{
+	padding: 50px 0; 
+	margin-left:40px; 
+	margin-right: 40px; 
+	background: #161e4a;
+	height: 60vh; 
+	text-align: justify;
+}
+
+.glaucoma img{
+	height:350px; 
+	width:auto; 
+}
+.glaucoma .image{
+	margin-left: 30px 
+}
+
+.glaucoma .content h2{
+	font-size: 3rem;
+	color: #fff;
+	text-shadow: 0 .3rem .5rem rgba(0,0,0,.3);
+	text-transform: uppercase; 
+	margin-left:250px;
+	margin-top: -330px; 
+}
+.glaucoma .content p {
+    color: #fff;
+    font-size: 2rem;
+    margin-left: 300px; /* Opcional: ajusta el margen izquierdo */
+    margin-right: 80px; /* Opcional: ajusta el margen derecho */
+	margin-top: 20px; 
+}
+.glaucoma button {
+	height: 10 rem;
+	width: 17rem;
+	border-radius: 1rem;
+	background:#ff046f;
+	color:#fff;
+	font-size: 2rem;
+	cursor: pointer;
+	transition:.2s;
+	box-shadow:0 .3rem 1rem rgba(0,0,0,.3);
+	margin-top: 2rem;
+	border-color:#ff046f;
+	margin-left:300px; 
+}
+
+/*Steps*/
+
+.steps{
+	height:100vh; 
+	margin-top: 100px;
+}
+.steps p{
+	display:flex; 
+	text-align: center;
+	color:#fff; 
+	font-size: 3rem;
+	justify-content: center;
+	text-transform: uppercase; 
+	margin-bottom:30px; 
+	font-weight: bold; /*negrita*/
+}
+.steps .number {
+    margin: 0 auto; /* Centra horizontalmente los elementos */
+    display: flex;
+    justify-content: space-between;
+    width: auto; /*Ajusta el ancho máximo según sea necesario */
+	text-align: center; 
+	display: flex;
+    justify-content: center;	
+	
+}
+.steps .box1 {
+    margin: 0 150px; /* Ajusta el margen entre las cajas */
+	height:20rem;
+	width:20rem;
+}
+.steps .number h1{
+	color:#fff; 
+	font-size:15rem;
+	opacity: 0.5; 
+}
+.steps .number h2{
+	color:#fff; 
+	font-size: 3rem;
+	justify-content: center;
+}

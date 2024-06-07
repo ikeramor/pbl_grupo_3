@@ -1,0 +1,201 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;1,200;1,300;1,400&display=swap');
+
+* {
+	font-family: Montserrat;
+	text-decoration:none;
+	outline: none;
+	margin:0;
+	padding:0;
+	box-sizing:border-box;
+}
+*::selection {
+	background:#ff046f;
+	color:#fff;
+}
+
+html {
+	font-size: 62.5%;
+	overflow-x: hidden; /*"hidden" significa que cualquier contenido que se desborde horizontalmente (es decir, que sea más ancho que el contenedor) será ocultado*/
+}
+
+body {
+	background:#2c345e;
+}
+
+.heading {
+	font-size: 4rem;
+	color:#fff;
+	text-align:center;
+	padding: 13rem 1rem 0 0;
+	letter-spacing: .2rem;
+	font-weight: 500;
+
+}
+
+.title{
+	padding: 0 1rem;
+	font-size: 2rem;
+	text-align: center;
+	font-weight: 400;
+	color:#fff;
+}
+
+header {
+	width:100%;
+	background:#161e4a;
+	position:fixed;
+	display:flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 1rem 2rem;
+	z-index: 1000;
+	transition: .2s;
+}
+
+header .navbar ul {
+	display:flex;
+	align-items: center;
+	justify-content: space-between;
+	list-style:none;
+}
+
+header .navbar ul li {
+	margin: 0 1rem;
+}
+
+header .navbar ul li a {
+	font-size: 2rem;
+	color:#fff;
+	transition: .2s;
+}
+
+header .navbar ul li .active,
+header .navbar ul li a:hover {
+	color:#ff046f;
+}
+
+header .logo {
+	font-size: 1.5 rem;
+	color:#fff;
+	text-transform:uppercase
+}
+
+.contact {
+	background:#2c345e;
+	height: 100vh;
+	
+	
+}
+
+.contact .row {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 5rem 0;
+	text-align : center;
+}
+
+.contact .row .form-container {
+	width: 50%;
+	padding-right: 6rem;
+	
+}
+
+.contact .row .form-container input , textarea {
+	height: 4rem;
+	width: 100%;
+	background:#fff;
+	border-radius: 5rem;
+	padding: 0 1rem;
+	margin: 1rem 0;
+	color: #ff046f;
+	font-size: 1.7rem;
+	transition: .2s linear;
+}
+
+.contact .row .form-container input:focus , textarea:focus {
+	border: .rem solid #ff046f;
+} 
+
+.contact .row .form-container textarea {
+	height: 20rem;
+	border-radius: 1rem;
+	padding:1rem;
+	resize: none;
+}
+
+.contact .row .form-container input[type="submit"] {
+	height: 5rem;
+	width: 17rem;
+	background: #ff046f;
+	color:#fff;
+	cursor:pointer;
+	font-size: 2rem;
+	transition: .2s;
+}
+
+.contact .row .form-container input[type="submit"]:hover{
+	background: none;
+	color:#ff046f;
+	border: .2rem solid #ff046f;
+} 
+.recordar{
+	color:#ff046f 
+}
+
+.recordar:hover{
+	text-decoration: underline; 
+}
+
+.signup{
+	margin:10px 0; 
+	text-align:center; 
+	font-size: 16px; 
+	color: #fff; 
+}
+
+.signup a{
+       color : #ff046f;
+}
+
+.signup a:hover{
+	text-decoration: underline;
+}
+
+/* Estilos para el contenedor del mensaje de error */
+.error-message-container {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px; /* Aumenta el espacio alrededor del contenido */
+    border: 1px solid #ccc;
+    border-radius: 10px; /* Aumenta el radio de la esquina */
+    z-index: 999; /* Asegura que el contenedor aparezca encima de otros elementos */
+    width: 300px; /* Ajusta el ancho del contenedor */
+    text-align: center; /* Centra el contenido del contenedor */
+}
+
+/* Estilos para el mensaje de error */
+.error-message {
+    color: red;
+    font-size: 30px; /* Ajusta el tamaño del texto */
+    margin-bottom: 10px; /* Aumenta el espacio debajo del texto */
+}
+
+/* Estilos para el botón de cerrar */
+.close-button {
+    margin-top: 20px; /* Aumenta el espacio encima del botón */
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px; /* Aumenta el tamaño del botón */
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    background-color: #0056b3;
+}

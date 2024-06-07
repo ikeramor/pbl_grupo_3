@@ -1,0 +1,280 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;1,200;1,300;1,400&display=swap');
+
+* {
+	font-family: Montserrat;
+	text-decoration:none;
+	outline: none;
+	margin:0;
+	padding:0;
+	box-sizing:border-box;
+}
+
+html {
+	font-size: 62.5%;
+	overflow-x: hidden; /*"hidden" significa que cualquier contenido que se desborde horizontalmente (es decir, que sea más ancho que el contenedor) será ocultado*/
+}
+
+body {
+	background:#2c345e; 
+}
+
+header {
+	width:100%;
+	position:fixed;
+	background:#161e4a;
+	display:flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 1rem 2rem;
+	z-index: 1000;
+	transition: .2s;
+}
+
+header .navbar ul {
+	display:flex;
+	align-items: center;
+	justify-content: space-between;
+	list-style:none;
+}
+
+header .navbar ul li {
+	margin: 0 1rem;
+}
+
+header .navbar ul li a {
+	font-size: 2rem;
+	color:#fff;
+	transition: .2s;
+}
+
+header .navbar ul li .active,
+header .navbar ul li a:hover {
+	color:#ff046f;
+}
+
+header .logo {
+	font-size: 1.5 rem;
+	color:#fff;
+	text-transform:uppercase
+}
+.info {
+    height: 100vh;
+    background-image: url('images/fondo.jpeg');
+    background-size: cover; /* Ajusta el tamaño de la imagen para cubrir completamente el contenedor */
+    background-position: center; /* Centra la imagen en el contenedor */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    z-index: 0;
+    overflow: hidden;
+    position: relative;
+
+}
+.info {
+	overflow:hidden;
+	position:relative;
+}
+
+.info .content {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-flow: column;
+	padding-top: 15rem;
+	text-align: center;
+}
+
+.info .content h1 {
+	font-size: 4rem;
+	color: #000000;
+	padding: 0 10rem;
+	text-shadow: 0 .3rem .5rem rgba(0,0,0,.3);
+	text-transform: uppercase; 
+}
+
+.info .content p {
+	font-size: 2rem;
+	color: #000000;
+	padding: 1rem 10rem;
+	text-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+}
+
+.info .content button {
+	height: 10 rem;
+	width: 17rem;
+	border-radius: 1rem;
+	background:#ff046f;
+	color:#fff;
+	font-size: 2rem;
+	cursor: pointer;
+	transition:.2s;
+	box-shadow:0 .3rem 1rem rgba(0,0,0,.3);
+	margin-top: 2rem;
+	border-color:#ff046f;
+}
+
+/*team*/
+.team {
+    text-align: center; /* Alinea el contenido al centro */
+	margin-right: 30px; /* Establece un margen de 20px en el lado derecho */
+    margin-left: 30px;
+	margin-top: 50px
+	 
+}
+
+.team h1{
+	font-size: 4rem;
+	color: #fff;
+	padding: 0 10rem;
+	text-shadow: 0 .3rem .5rem rgba(0,0,0,.3);
+	text-transform: uppercase;
+	
+
+}
+
+.team .row {
+	padding-top: 5rem;
+    display: flex;
+    justify-content: center; /* Centra los elementos horizontalmente */
+    margin-bottom: 20px; /* Espacio entre las filas */
+}
+
+.team .person {
+    margin: 0 30px; 
+}
+
+.team .person img {
+    width: 150px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+.team .person h3 {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #fff;
+	text-decoration: underline; 
+}
+
+.team .person p {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #fff;
+}
+/*instalaciones*/
+
+.instalaciones{
+	margin-right: 40px; /* Establece un margen de 20px en el lado derecho */
+    margin-left: 40px;
+	height: 90vh;
+	background: #161e4a; 
+    background-size: cover;
+}
+
+.instalaciones .content {
+    background: #161e4a; 
+    background-size: cover; /* Ajusta el tamaño de la imagen para cubrir completamente el contenedor */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centra verticalmente el contenido */
+    flex-direction: column;
+    text-align: center;
+}
+.instalaciones .content h1{
+	font-size: 4rem;
+	color: #fff;
+	padding: 0 10rem;
+	text-shadow: 0 .3rem .5rem rgba(0,0,0,.3);
+	text-transform: uppercase;
+	padding-top: 40px; 
+	
+}
+.instalaciones .content p {
+	font-size: 2rem;
+	color: #fff;
+	padding: 1rem 25rem;
+}
+.instalaciones .caja{
+	 
+	margin: 0 auto; /* Centra horizontalmente los elementos */
+    display: flex;
+    justify-content: space-between;
+    width: auto; /*Ajusta el ancho máximo según sea necesario */
+	text-align: center; 
+	display: flex;
+    justify-content: center;
+} 
+.instalaciones .caja .details{
+	margin-top: 100px;  
+}
+.instalaciones .caja h3{
+	text-align: left;
+	margin-left: 20px; 
+	color: #ff046f; 
+	font-size: 2rem;
+}
+.instalaciones .caja .cuando{
+	text-align: left;
+	margin-left: 25px; 
+	color: #fff; 
+	font-size: 1.75rem;
+	font-weight: bold
+}
+.instalaciones .caja p{
+	text-align: left;
+	margin-left: 30px; 
+	color: #fff; 
+	font-size: 1.75rem;
+}
+
+/*datos*/
+
+.datos{
+	height: 60vh;
+}
+.datos h1{
+	margin-top: 50px; 
+	color:#fff; 
+	display:flex; 
+	text-align: center; 
+	justify-content: center; 
+	font-size:3rem; 
+	text-transform: uppercase;
+}
+.datos .container{
+	margin: 0 auto; /* Centra horizontalmente los elementos */
+    display: flex;
+    justify-content: space-between;
+    width: auto; /*Ajusta el ancho máximo según sea necesario */
+	text-align: center; 
+    justify-content: center; 
+	margin-top:30px; 
+}
+.datos .container .box1{
+	margin: 0 100px; /* Ajusta el margen entre las cajas */
+	height:30rem;
+	width:30rem;
+	background: #161e4a; 
+	border-radius:10%
+	
+}
+.datos .container .box1 h2{
+	margin-top:20px; 
+	color:#fff; 
+	font-size:2.3rem;
+	text-decoration: underline;
+}
+.datos .container .box1 h3{
+	margin-top:20px; 
+	color:#fff; 
+	font-size:2rem;
+}
+.datos .container .box1 p{
+	margin-top:10px; 
+	color:#fff; 
+	font-size:1.5rem;
+}
+.datos .container .box1 .contactar a{
+       color: #ff046f;
+}
+.datos .container .box1 .contactar a:hover{
+	text-decoration: underline;
+}

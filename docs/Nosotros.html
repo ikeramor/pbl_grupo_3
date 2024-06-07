@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Nosotros/VisioGuard</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+		<link rel="stylesheet" href="Nosotros.css" >
+	</head>
+	<body>
+		<header>
+			<a href="Index.html" class="logo">
+				<div class="image">
+					<img src="images/logo.png">
+				</div>
+			</a>
+			<nav class="navbar">
+				<ul>
+					<li><a href="Index.html">INICIO</a></li>
+					<li><a href="Nosotros.html"class="active">QUIENES SOMOS</a></li>
+					<li><a href="Productos.html">PRODUCTOS</a></li>
+					<li><a href="AreaCliente.html">ÁREA CLIENTE</a></li>
+					<li><a href="Contactenos.html">CONTACTENOS</a></li>
+					<li><a href="faq.html">FAQ</a></li>
+				</ul>
+			</nav>
+		</header>
+		<section class="info" id="info">
+			<div class="content">
+				<h1>¡Bienvenido a VisioGuard!</h1>
+				<p>VisioGuard es una empresa emergente con sede en Arrasate (Gipuzkoa, Euskal Herria), fundada en el año 2024 y compuesta por un equipo apasionado de siete individuos. De esos siete, cinco son fundadores y provienen de un trasfondo en ingeniería biomédica de Mondragon Unibertitatea.</p>
+				<p>Nos enorgullece ofrecer soluciones innovadoras en el campo de la salud, específicamente centradas en la detección temprana y precisa del glaucoma. Creemos firmemente en el poder de la tecnología para mejorar la calidad de vida de las personas, y es por eso que hemos dirigido nuestros esfuerzos hacia el desarrollo de software de vanguardia que pueda ayudar a diagnosticar esta enfermedad ocular de manera rápida y efectiva.</p>
+				<p>En VisioGuard, estamos comprometidos con la excelencia en cada paso del camino. Desde la concepción de nuestras ideas hasta la implementación y la entrega final, nos esforzamos por mantener los más altos estándares de calidad y precisión. Nuestro equipo multidisciplinario combina habilidades técnicas con un profundo entendimiento de las necesidades clínicas, lo que nos permite crear soluciones que realmente marcan la diferencia en la atención médica.</p>
+				<p>En VisioGuard, nuestro objetivo es claro: mejorar la salud visual y transformar vidas a través de la innovación tecnológica.</p>
+				<a href="#"><button onclick="mostrarInformacion()">Descubre mas</button></a>
+			</div>
+			<script>
+				function mostrarInformacion() {
+					var team = document.getElementById("team");
+					var instalaciones = document.getElementById("instalaciones");
+					var datos = document.getElementById("datos");
+					
+					if (team.style.display === "none" && instalaciones.style.display === "none") {
+						team.style.display = "block";
+						instalaciones.style.display = "block";
+						datos.style.display = "block";
+					} else {
+						team.style.display = "none";
+						instalaciones.style.display = "none";
+						datos.style.display = "none";
+					}
+				}
+			</script>
+		</section>
+
+		<section class="team" id="team" style="display: none;">
+			<h1>Nuestro Equipo</h1>
+			<div class="row">
+				<div class="person">
+					<img src="images/Iker.png" alt="Persona 1">
+					<h3>Iker Amor Rodríguez</h3>
+					<p>Director de Tecnología y Jefe de Desarrollo</p>
+				</div>
+				<div class="person">
+					<img src="images/Asier.png" alt="Persona 2">
+					<h3>Asier Morcillo Etxarri</h3>
+					<p>Director Financiero</p>
+				</div>
+				<div class="person">
+					<img src="images/Elisa.png" alt="Persona 3">
+					<h3>Elisa Garcia de Eulate Pérez</h3>
+					<p>Responsable Técnica y Directora de Calidad</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="person">
+					<img src="images/Ane.png" alt="Persona 4">
+					<h3>Ane Zabala Mallona</h3>
+					<p>Directora de Operaciones y Soporte al Cliente</p>
+				</div>
+				<div class="person">
+					<img src="images/Paula.png" alt="Persona 5">
+					<h3>Paula Villarino Barbero</h3>
+					<p>Jefa de Investigación y Directora General</p>
+				</div>
+			</div>
+		</section>
+			
+		<section class="instalaciones" id="instalaciones" style="display: none;">
+			
+				<div class="content">
+					<h1>Instalaciones</h1>
+					<p>VisioGuard tiene su oficina central y almacén ubicados en Arrasate. Nuestras instalaciones incluyen un área específicamente diseñada para la atención al cliente, además de un espacio dedicado a la reparación de productos.</p>	
+				</div>
+				<div class="caja">	
+					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2914.985269141901!2d-2.4992802240304512!3d43.06277737113633!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4fd67cf8644db9%3A0xec54c7103d8ba38f!2sAv.%20Uribarri%2C%207%2C%2020500%20Arrasate%2C%20Gipuzkoa!5e0!3m2!1ses!2ses!4v1717607658698!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+					<div class="details">
+						<div class="box1">
+							<h3>Dirección</h3>
+							<p>Uribarri Hiribidea, 7, (20500) Arrasate - Gipuzkoa</p>
+						</div>
+						<div class="box1">
+							<h3>Horario de Apertura</h3>
+							<p class="cuando">Horario de oficina</p>
+							<p>8:00-14:00</p>
+							<p class="cuando">Atención al cliente</p>
+							<p>24h</p>
+						</div>
+						<div class="box1">
+							<h3>Telefono</h3>
+							<p>946301989</p>
+						</div>
+					</div>
+				</div>
+		</section>
+		
+		<section class="datos" id="datos" style="display: none;">
+			<h1>¡Contactanos!</h1>
+			<div class="container">
+				<div class="box1">
+					<h2>Detalles de Contacto</h2>
+					<h3>Email</h3>
+					<p>hello@visioguard.com</p>
+					<h3>Telefono</h3>
+					<p>946301989</p>
+					<h3>Dirección</h3>
+					<p>Uribarri Hiribidea, 7, (20500) Arrasate - Gipuzkoa</p>
+				</div>
+				<div class="box1">
+					<h2>Horarios</h2>
+					<h3>Horarios de Oficina</h3>
+					<p>Lunes a Viernes 8:00-14:00</p>
+					<h3>Atención al Cliente</h3>
+					<p>Servicio 24h</p>
+				</div>
+				<div class="box1">
+					<h2>Atención al Cliente</h2>
+					<h3>Email</h3>
+					<p>support@visioguard.com</p>
+					<h3>Recursos online</h3>
+					<p class="contactar">Para contactar con nosotros a traves de la web, pulse <a href="Contactenos.html">AQUÍ</a></p>
+				</div>
+			</div>
+		</section>
+		
+	</body>
+</html>
+
