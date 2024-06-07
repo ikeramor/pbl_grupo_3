@@ -8,7 +8,7 @@
 % 
 
 close all; clear all;
-T0=readtable('metadata.csv');
+T0=readtable('TCorrect.csv');%TCorrect=imagenes revisadas + no revisadas   %metadata=imagenes revisadas
 [N, P]=size(T0);
 
 T=T0;
@@ -74,17 +74,26 @@ end
 %% 
 % Las imagenes recortadas incorrectamente seran eliminadas y no se tendran en 
 % cuenta. Estos son aproximadamente el 10%
-
-MalCorte=[145, 99, 89, 74, 66, 62, 43, 28, 19, 5]; %78   265   350   513   755   805   883   1020   1098   1537
-MalCorte=sort(MalCorte,'descend');
-
-for i=1:length(MalCorte)
-num=MalCorte(1,i);
-T(num,:)=[];
-end
-[N, P]=size(T);%dimensiones nueva tabla
-variables=T.Properties.VariableNames;
-%% 
+% 
+% MalCorte=[145, 99, 89, 74, 66, 62, 43, 28, 19, 5]; %78   265   350   513   
+% 755   805   883   1020   1098   1537
+% 
+% MalCorte=sort(MalCorte,'descend');
+% 
+% 
+% 
+% for i=1:length(MalCorte)
+% 
+% num=MalCorte(1,i);
+% 
+% T(num,:)=[];
+% 
+% end
+% 
+% [N, P]=size(T);%dimensiones nueva tabla
+% 
+% variables=T.Properties.VariableNames;
+% 
 % Ubicación de las imagenes cropeadas
 
 CroppedImagePath=fullfile('CroppedImages');
@@ -158,36 +167,91 @@ end
 %graycomatrix
 for i=1:N
     I_read=imread(CroppedImageLocation(1,i));
-    I_read_gray=rgb2gray(I_read);
-    I_glcm=graycomatrix(I_read_gray);
+    %I_read_gray=rgb2gray(I_read);
+    I_read_red=I_read(:,:,1);I_read_green=I_read(:,:,2);I_read_blue=I_read(:,:,3);
 
-    GrayProps=graycoprops(I_glcm);
+    I_glcm_red=graycomatrix(I_read_red);I_glcm_green=graycomatrix(I_read_green);I_glcm_blue=graycomatrix(I_read_blue);
+    GrayProps_red=graycoprops(I_glcm_red);GrayProps_green=graycoprops(I_glcm_green);GrayProps_blue=graycoprops(I_glcm_blue);
+    
+    %No aportan inform relevante al modelo
+    %T.Contraste_glcm_red(i,1)=GrayProps_red.Contrast;
+    %T.Correlacion_glcm_red(i,1)=GrayProps_red.Correlation;
+    %T.Energia_glcm_red(i,1)=GrayProps_red.Energy;
+    %T.Homogeneidad_glcm_red(i,1)=GrayProps_red.Homogeneity;
 
-    T.Contraste_glcm(i,1)=GrayProps.Contrast;
-    T.Correlacion_glcm(i,1)=GrayProps.Correlation;
-    T.Energia_glcm(i,1)=GrayProps.Energy;
-    T.Homogeneidad_glcm(i,1)=GrayProps.Homogeneity;
+    T.Contraste_glcm_green(i,1)=GrayProps_green.Contrast;
+    T.Correlacion_glcm_green(i,1)=GrayProps_green.Correlation;
+    T.Energia_glcm_green(i,1)=GrayProps_green.Energy;
+    T.Homogeneidad_glcm_green(i,1)=GrayProps_green.Homogeneity;
+
+    T.Contraste_glcm_blue(i,1)=GrayProps_blue.Contrast;
+    T.Correlacion_glcm_blue(i,1)=GrayProps_blue.Correlation;
+    T.Energia_glcm_blue(i,1)=GrayProps_blue.Energy;
+    T.Homogeneidad_glcm_blue(i,1)=GrayProps_blue.Homogeneity;
 end
 % Markov Random Field Least Estimates 
 
-%T.Contraste_glcm=[]%T.Correlacion_glcm=[]%T.Energia_glcm=[]%T.Homogeneidad_glcm=[]
+%T.Contraste_glcm_red=[];T.Contraste_glcm_green=[];T.Contraste_glcm_blue=[];
+%T.Correlacion_glcm_red=[];T.Correlacion_glcm_green=[];T.Correlacion_glcm_blue=[];
+%T.Energia_glcm_red=[];T.Energia_glcm_green=[];T.Energia_glcm_blue=[];
+%T.Homogeneidad_glcm_red=[];T.Homogeneidad_glcm_green=[];T.Homogeneidad_glcm_blue=[];
 % Wavelet
 
 for w=1:N
     I_wavelet=imread(CroppedImageLocation(1,w));
-    [cA,cH,cV,cD]=dwt2(I,);%cA: approximation coeff, cH: horizontal detaiel coeff, cV: vertical detail coeff, cD: Diagonal detail coefficients
     
+    [~,cH,cV,cD]=dwt2(I_wavelet,'db4');%cA: approximation coeff, cH: horizontal detaiel coeff, cV: vertical detail coeff, cD: Diagonal detail coefficients
     %Feature extraction from Wavelet transform
-    Contraste_wavelet=0;Energia_wavelet=0; Desemejanza_wavelet=0;Homogeneidad_wavelet=0;
-    for i = 1:size(I_wavelet, 1)
-        for j = 1:size(I_wavelet, 2)
-        Contraste_wavelet=((abs(i-j))^2)*I_wavelet(i,j)+Contraste_wavelet;
-        Energia_wavelet=(I_wavelet(i,j))^2+Energia_wavelet;
-        Desemejanza_wavelet=abs(i-j)*I_wavelet(i,j)+Desemejanza_wavelet;
-        Homogeneidad_wavelet=Homogeneidad_wavelet+I_wavelet(i,j)/(1+(i-j)^2);
+    %Horizontal
+    Contraste_wavelet_cH=0;Energia_wavelet_cH=0; Desemejanza_wavelet_cH=0;Homogeneidad_wavelet_cH=0;
+    for i = 1:size(cH, 1)
+        for j = 1:size(cH, 2)
+            Contraste_wavelet_cH=((abs(i-j))^2)*cH(i,j)+Contraste_wavelet_cH;
+            Energia_wavelet_cH=(cH(i,j))^2+Energia_wavelet_cH;
+            Desemejanza_wavelet_cH=abs(i-j)*cH(i,j)+Desemejanza_wavelet_cH;
+            Homogeneidad_wavelet_cH=Homogeneidad_wavelet_cH+cH(i,j)/(1+(i-j)^2);
         end
     end
-    Entropia_wavelet=entropy(I_wavelet);
+    T.Contraste_wavelet_cH(w,1)=Contraste_wavelet_cH;
+    T.Energia_wavelet_cH(w,1)=Energia_wavelet_cH;
+    T.Desemejanza_wavelet_cH(w,1)=Desemejanza_wavelet_cH;
+    T.Homogeneidad_wavelet_cH(w,1)=Homogeneidad_wavelet_cH;
+    T.Entropia_wavelet_cH(w,1)=entropy(cH);
+    T.Media_wavelet_cH(w,1)=mean(cH(:));
+    
+    %Vertical 
+    Contraste_wavelet_cV=0;Energia_wavelet_cV=0; Desemejanza_wavelet_cV=0;Homogeneidad_wavelet_cV=0;
+    for i = 1:size(cV, 1)
+        for j = 1:size(cV, 2)
+            Contraste_wavelet_cV=((abs(i-j))^2)*cV(i,j)+Contraste_wavelet_cV;
+            Energia_wavelet_cV=(cV(i,j))^2+Energia_wavelet_cV;
+            Desemejanza_wavelet_cV=abs(i-j)*cV(i,j)+Desemejanza_wavelet_cV;
+            Homogeneidad_wavelet_cV=Homogeneidad_wavelet_cV+cV(i,j)/(1+(i-j)^2);
+        end
+    end
+    T.Contraste_wavelet_cV(w,1)= Contraste_wavelet_cV;
+    T.Energia_wavelet_cV(w,1)=Energia_wavelet_cV;
+    T.Desemejanza_wavelet_cV(w,1)=Desemejanza_wavelet_cV;
+    T.Homogeneidad_wavelet_cV(w,1)=Homogeneidad_wavelet_cV;
+    T.Entropia_wavelet_cV(w,1)=entropy(cV);
+    T.Media_wavelet_cV(w,1)=mean(cV(:));
+
+   %Diagonal 
+    Contraste_wavelet_cD=0;Energia_wavelet_cD=0; Desemejanza_wavelet_cD=0;Homogeneidad_wavelet_cD=0;
+    for i = 1:size(cD, 1)
+        for j = 1:size(cD, 2)
+            Contraste_wavelet_cD=((abs(i-j))^2)*cD(i,j)+Contraste_wavelet_cD;
+            Energia_wavelet_cD=(cD(i,j))^2+Energia_wavelet_cD;
+            Desemejanza_wavelet_cD=abs(i-j)*cD(i,j)+Desemejanza_wavelet_cD;
+            Homogeneidad_wavelet_cD=Homogeneidad_wavelet_cD+cD(i,j)/(1+(i-j)^2);
+        end
+    end
+    T.Contraste_wavelet_cD(w,1)= Contraste_wavelet_cD;
+    T.Energia_wavelet_cD(w,1)=Energia_wavelet_cD;
+    T.Desemejanza_wavelet_cD(w,1)=Desemejanza_wavelet_cD;
+    T.Homogeneidad_wavelet_cD(w,1)=Homogeneidad_wavelet_cD;
+    T.Entropia_wavelet_cD(w,1)=entropy(cD);
+    T.Media_wavelet_cD(w,1)=mean(cD(:));
 end
 % Segmentación
 % Disco óptico
@@ -291,6 +355,18 @@ end
 SCDImageLocation=[SCDImageLocation(2:end)];
 %% MACHINE LEARNING
 
+%Separacion de datos estratificada para entrenar el modelo
+NGlaucoma=sum(T.glaucoma==1);NSano=sum(T.glaucoma==0);
+Diferencia=NSano-NGlaucoma;
+FindSano=find(T.glaucoma==0);FindSano=sort(FindSano,'descend');
+TStratified=T;
+for i=1:Diferencia
+    j=FindSano(i);
+    TStratified(j,:)=[];
+end
+NGlaucoma=sum(TStratified.glaucoma==1)
+NSano=sum(TStratified.glaucoma==0)
+%%
 % Con la aplicación de MATLAB "classification learner"  se entrenaran diversos 
 % modelos y se seleccionarán los que mejor predicciones hagan. La division de 
 % datos se realizara por medio del metodo Cross validation (en 5 iteraciones).
