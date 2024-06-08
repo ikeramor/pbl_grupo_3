@@ -15,7 +15,7 @@ for i=4:P
     column=T{:, i};
     Missing=sum(isnan(column));
     if Missing~=0
-        X=[variables{1,i},' tiene valores q faltan'];
+        X=[variables{1,i},' tiene valores que faltan'];
         disp(X)
     end
 end
@@ -36,6 +36,8 @@ for i=4:P
         disp(X)
     end
 end
+%% 
+% Ya no hay valor alguno que falte
 % Correlation matrix
 
 columns=variables(4:end);Tcorr=T(:,columns);%quitar name, quality y glaucoma para correlacion
@@ -52,6 +54,7 @@ histogram(categorical(Tcategorical))
 %% Machine Learning
 
 %Separacion de datos estratificada para entrenar el modelo, asi se mantiene una balanza de clases
+
 TStratified=T;
 NGlaucoma=sum(T.glaucoma==1);NSano=sum(T.glaucoma==0);
 Diferencia=NSano-NGlaucoma
@@ -63,3 +66,7 @@ for i=1:Diferencia
 end
 NGlaucoma=sum(TStratified.glaucoma==1)
 NSano=sum(TStratified.glaucoma==0)
+%%
+%por medio de Classification Learner se ha desarrollado el modelo de
+%clasificacion
+load('BinaryGLMLogisticRegressionModel.mat');
