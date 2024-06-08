@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;1,200;1,300;1,400&display=swap');
+
+* {
+	font-family: Montserrat;
+	text-decoration:none;
+	outline: none;
+	margin:0;
+	padding:0;
+	box-sizing:border-box;
+}
+
+html {
+	font-size: 62.5%;
+	overflow-x: hidden; /*"hidden" significa que cualquier contenido que se desborde horizontalmente (es decir, que sea más ancho que el contenedor) será ocultado*/
+}
+
+body {
+	background:#2c345e;; 
+}
+
+header {
+	width:100%;
+	position:fixed;
+	background:#161e4a;
+	display:flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 1rem 2rem;
+	z-index: 1000;
+	transition: .2s;
+}
+
+header .navbar ul {
+	display:flex;
+	align-items: center;
+	justify-content: space-between;
+	list-style:none;
+}
+
+header .navbar ul li {
+	margin: 0 1rem;
+}
+
+header .navbar ul li a {
+	font-size: 2rem;
+	color:#fff;
+	transition: .2s;
+}
+
+header .navbar ul li .active,
+header .navbar ul li a:hover {
+	color:#ff046f;
+}
+
+header .logo {
+	font-size: 1.5 rem;
+	color:#fff;
+	text-transform:uppercase
+}
+
+ .pdf-object {
+	height: 100%;
+	width: auto;
+	border: none; /* Quita el borde del objeto PDF */
+}
+.pdf-container {
+    width: 21.59cm; /* Ancho de una hoja de PDF en centímetros */
+    height: 27.94cm; /* Altura de una hoja de PDF en centímetros */
+    margin: 0 auto; /* Centra el contenedor horizontalmente */
+    border: 2px solid #ddd; /* Borde del contenedor */
+    border-radius: 10px; /* Bordes redondeados */
+    overflow: hidden; /* Evita el desbordamiento del PDF */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
+}

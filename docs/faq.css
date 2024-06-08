@@ -149,8 +149,9 @@ header .logo {
 	transition: .4s;	
 }
 .preguntas .box-container .container1 .respuesta p{
-	font-size: 1.3rem;
+	font-size: 1.5rem;
 	color: #fff; 
+	text-align: justify;
 }
 .preguntas .box-container .container1 .respuesta span{
 	position: absolute; 
@@ -158,6 +159,12 @@ header .logo {
 	font-size: 3rem; 
 	top:5px; 
 	opacity: .1;  
+}
+.preguntas .box-container .container1 a{
+       color: #ff046f;
+}
+.preguntas .box-container .container1 a:hover{
+	text-decoration: underline;
 }
 
 /*opiniones */
