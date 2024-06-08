@@ -58,14 +58,16 @@ header .logo {
 	text-transform:uppercase
 }
 
- .pdf-object {
+ .politica {
 	height: 100%;
 	width: auto;
 	border: none; /* Quita el borde del objeto PDF */
+	padding-top: 100px; 
+	
 }
 .pdf-container {
     width: 21.59cm; /* Ancho de una hoja de PDF en centímetros */
-    height: 27.94cm; /* Altura de una hoja de PDF en centímetros */
+    height: auto; /* Altura de una hoja de PDF en centímetros */
     margin: 0 auto; /* Centra el contenedor horizontalmente */
     border: 2px solid #ddd; /* Borde del contenedor */
     border-radius: 10px; /* Bordes redondeados */
