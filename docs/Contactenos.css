@@ -167,3 +167,69 @@ header .logo {
 .close-button:hover {
     background-color: #0056b3;
 }
+/*footer*/
+.footer{
+	
+	background: #464d7e; 
+	padding:50px 0;
+	 	
+}
+.footer .container{
+	display:flex;
+    width: 100%; /* Ancho del contenedor */
+    margin: auto;
+	padding-left: 150px; 
+	
+}
+.footer .row{
+	display:flex;
+    width: 80%; /* Ancho del contenedor */
+    margin: auto; /* Centra el contenedor horizontalmente */
+}
+
+
+.footer .row .links{
+	width:30%; 
+	padding: 0 15px; 
+	
+}
+.footer .row .links h4{
+	font-size: 3rem;
+	color: #fff; 
+	margin-bottom: 25px; 
+	font-weight: 500; 
+	padding-bottom:10px; 
+	text-transform: uppercase; 
+	font-weight: bold;
+	display: inline-block; 
+	text-decoration: underline;
+}
+.footer .row .links ul a{
+	font-size: 10px;
+	color:  #161e4a; 
+	display:block; 
+	margin-bottom: 15px; 
+	transition: all .3s ease; 
+	font-size: 2rem; 
+}
+.footer .row .links ul a:hover{
+	color:#fff; 
+	padding-left: 6px; 
+	text-decoration: underline;
+}
+.social a{
+	display: inline-block; 
+	height:60px; 
+	width:60px; 
+	background: #161e4a; 
+	text-align: center; 
+	line-height:60px; 
+	border-radius: 50%; 
+	color:#fff; 
+	transition: all .5s ease; 
+	font-size:3rem;
+}
+.social a:hover{
+	background:#fff;
+	color: #161e4a;
+}

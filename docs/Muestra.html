@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Muestra/VisioGuard</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+		<link rel="stylesheet" href="AreaCliente.css" >
+	</head>
+	<body>
+		<header>
+			<a href="index.html" class="logo">
+				<div class="image">
+					<img src="images/logo.png">
+				</div>
+			</a>
+			<nav class="navbar">
+				<ul>
+					<li><a href="index.html">INICIO</a></li>
+					<li><a href="Nosotros.html">QUIENES SOMOS</a></li>
+					<li><a href="Productos.html">PRODUCTOS</a></li>
+					<li><a href="AreaCliente.html">ÁREA CLIENTE</a></li>
+					<li><a href="Contactenos.html">CONTACTENOS</a></li>
+					<li><a href="faq.html">FAQ</a></li>
+				</ul>
+			</nav>
+		</header>
+		
+		<section class="contact" id="contact">
+		
+			<h1 class="heading">Mustra Gratuita de 30 dias</h1>
+			<h3 class="title">Intruduzca la información de debajo para poder ver los resultados</h3>
+			
+			<div class="row">
+			
+				<div class="form-container">
+						<form id="loginForm">
+							<input type="email" id="email" placeholder="Correo">
+							<input type="phone" id="phone" placeholder="Telefono">
+							<input type="name" id="name" placeholder="Nombre">
+							<input type="surname" id="surname" placeholder="Apellidos">
+						
+							<input type="submit" value="Solicitar">
+							
+						</form>
+						<div id="errorMessageContainer" class="error-message-container">
+							<p id="errorMessage" class="error-message"></p>
+							<button id="closeButton" class="close-button">Entendido</button>
+						</div>
+				</div>
+			</div>
+		</section>
+		
+		<script src="Muestra.js"></script>
+	</body>
+</html>

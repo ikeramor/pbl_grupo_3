@@ -1,18 +1,18 @@
 document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Evita el envío del formulario
-
     var email = document.getElementById('email').value;
-    var password = document.getElementById('password').value;
+    var phone = document.getElementById('phone').value;
+	var name = document.getElementById('name').value;
+	var surname = document.getElementById('surname').value;
+	
 
-    if (!email || !password) {
+    if (!email || !phone ||!name ||!surname) {
+        event.preventDefault(); // Evita que se envíe el formulario
         document.getElementById('errorMessage').textContent = "Por favor, complete ambos campos.";
         document.getElementById('errorMessageContainer').style.display = "block"; // Muestra el contenedor de mensaje de error
-    } else {
-        // Redirige al usuario a PBL6.xml
-        window.location.href = "PBL6.xml";
     }
 });
 
+// Agrega un event listener al botón de cerrar
 document.getElementById('closeButton').addEventListener('click', function() {
     document.getElementById('errorMessageContainer').style.display = "none"; // Oculta el contenedor de mensaje de error
 });

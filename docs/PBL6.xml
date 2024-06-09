@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl"?>
+<?xml-stylesheet type="text/xsl" href="PBL6.xslt"?>
 <!--<!DOCTYPE Analisis SYSTEM "PBL6.dtd" []> --> <!--El DTD esta agregado en el archivo PBL6.dtd-->
 
 <Analisis modalidad="Retinografia" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="PBL6.xsd" >
