@@ -316,3 +316,30 @@ header .logo {
 .box1 p{
 	color: #fff; 
 }
+
+/*footer*/
+.footer{
+	
+	background: #464d7e; 
+	height:70vh; 
+	padding:50px 0; 
+}
+
+.footer .row{
+	display:flex; 
+	flex-wrap: wrap; 
+}
+
+.footer .row .links{
+	width:25%; 
+	padding: 0 15px; 
+	
+}
+.footer .row .links h4{
+	font-size: 20px;
+	color: #161e4a; 
+	margin-bottom: 25px; 
+	font-weight: 500; 
+	padding-bottom:10px; 
+	
+}
