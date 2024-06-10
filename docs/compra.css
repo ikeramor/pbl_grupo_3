@@ -97,4 +97,18 @@ header .logo {
 	margin-top: 2rem;
 	border-color:#ff046f;
 	margin-left:200px; 
+	.instrucciones {
+	text-align: center;
+	background: #2c345e;
+	padding-bottom: 70px; 
 }
+/*pago*/
+
+.pagar{
+	text-align: center;
+	background: #2c345e;
+	padding-bottom: 70px; 
+	height:70vh; 
+}
+
+.
