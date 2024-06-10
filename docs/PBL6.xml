@@ -22,7 +22,8 @@
 			</ResolucionDeLaImagen>
 			<Formato>JPG</Formato>
 			<TamañoMB>6</TamañoMB>
-			<Imagen></Imagen>
+			<Imagen ruta="Glaucoma/Segmentacion/glaucoma1.jpg"></Imagen>
+			<Retinografia ruta="Glaucoma/Retinografia/retinografia1.jpg"></Retinografia>
 		</InformacionDeLaImagen>
 		<Diagnostico>
 			<FechaDiagnostico>2024-05-06</FechaDiagnostico>
@@ -50,7 +51,8 @@
 			</ResolucionDeLaImagen>
 			<Formato>JPG</Formato>
 			<TamañoMB>6</TamañoMB>
-			<Imagen></Imagen>
+			<Imagen ruta="Glaucoma/Segmentacion/glaucoma2.jpg"></Imagen>
+			<Retinografia ruta="Glaucoma/Retinografia/retinografia2.jpg"></Retinografia>
 		</InformacionDeLaImagen>
 		<Diagnostico>
 			<FechaDiagnostico>2023-05-14</FechaDiagnostico>
@@ -78,7 +80,8 @@
 			</ResolucionDeLaImagen>
 			<Formato>JPG</Formato>
 			<TamañoMB>6</TamañoMB>
-			<Imagen></Imagen>
+			<Imagen ruta="Glaucoma/Segmentacion/glaucoma3.jpg"></Imagen>
+			<Retinografia ruta="Glaucoma/Retinografia/retinografia3.jpg"></Retinografia>
 		</InformacionDeLaImagen>
 		<Diagnostico>
 			<FechaDiagnostico>2023-05-14</FechaDiagnostico>
@@ -106,7 +109,8 @@
 			</ResolucionDeLaImagen>
 			<Formato>JPG</Formato>
 			<TamañoMB>6</TamañoMB>
-			<Imagen></Imagen>
+			<Imagen ruta="Glaucoma/Segmentacion/glaucoma4.jpg"></Imagen>
+			<Retinografia ruta="Glaucoma/Retinografia/retinografia4.jpg"></Retinografia>
 		</InformacionDeLaImagen>
 		<Diagnostico>
 			<FechaDiagnostico>2023-05-14</FechaDiagnostico>
@@ -134,7 +138,8 @@
 			</ResolucionDeLaImagen>
 			<Formato>JPG</Formato>
 			<TamañoMB>6</TamañoMB>
-			<Imagen></Imagen>
+			<Imagen ruta="Glaucoma/Segmentacion/glaucoma5.jpg"></Imagen>
+			<Retinografia ruta="Glaucoma/Retinografia/retinografia5.jpg"></Retinografia>
 		</InformacionDeLaImagen>
 		<Diagnostico>
 			<FechaDiagnostico>2023-05-14</FechaDiagnostico>
@@ -162,7 +167,8 @@
 			</ResolucionDeLaImagen>
 			<Formato>JPG</Formato>
 			<TamañoMB>6</TamañoMB>
-			<Imagen></Imagen>
+			<Imagen ruta="Glaucoma/Segmentacion/glaucoma6.jpg"></Imagen>
+			<Retinografia ruta="Glaucoma/Retinografia/retinografia6.jpg"></Retinografia>
 		</InformacionDeLaImagen>
 		<Diagnostico>
 			<FechaDiagnostico>2023-05-14</FechaDiagnostico>
@@ -190,12 +196,13 @@
 			</ResolucionDeLaImagen>
 			<Formato>JPG</Formato>
 			<TamañoMB>6</TamañoMB>
-			<Imagen></Imagen>
+			<Imagen ruta="Glaucoma/Segmentacion/glaucoma7.jpg"></Imagen>
+			<Retinografia ruta="Glaucoma/Retinografia/retinografia7.jpg"></Retinografia>
 		</InformacionDeLaImagen>
 		<Diagnostico>
 			<FechaDiagnostico>2023-05-14</FechaDiagnostico>
 			<RelacionCopaDisco>0.8</RelacionCopaDisco>
-			<ResultadoDiagnostico>Glaucoma</ResultadoDiagnostico>
+			<ResultadoDiagnostico>Sano</ResultadoDiagnostico>
 		</Diagnostico>
 	</Paciente>
 

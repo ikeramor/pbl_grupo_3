@@ -101,8 +101,15 @@
 												</xs:restriction>
 											</xs:simpleType>
 										</xs:element>
-										<xs:element name= "Imagen">
-										
+										<xs:element name= "Imagen" maxOccurs="1">
+											<xs:complexType>
+												<xs:attribute name="ruta" use="required"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name= "Rentinografia" maxOccurs="1">
+											<xs:complexType>
+												<xs:attribute name="ruta" use="required"/>
+											</xs:complexType>
 										</xs:element>
 									</xs:sequence>
 								</xs:complexType>

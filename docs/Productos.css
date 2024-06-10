@@ -292,8 +292,15 @@ header .logo {
 	justify-content:center;
 }
 
-.instrucciones .box-container .box h3 {
+
+.instrucciones .box-container .box h3 a{
+	
 	font-size: 1.25rem;
 	color: #fff;
 	transition: .2s;
 }
+.instrucciones .box-container .box h3 a:hover{
+	color:##2c345e;
+	text-decoration: underline;
+}
+	
