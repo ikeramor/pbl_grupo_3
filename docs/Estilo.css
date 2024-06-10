@@ -136,7 +136,11 @@ header .logo {
 	box-shadow:0 .3rem 5rem rgba(0,0,0,.5);
 	margin: 2rem;
 	cursor: pointer;
-}
+    transition: transform 0.3s ease;
+        }
+ .box:hover {
+    transform: scale(1.1);
+        }
 
 .extrainfo .box-container .box i {
 	height:6rem;
@@ -238,7 +242,12 @@ header .logo {
 	margin-top: 2rem;
 	border-color:#ff046f;
 	margin-left:40px;
+	cursor: pointer;
+    transition: transform 0.3s ease;
 }
+ .destacado button:hover {
+    transform: scale(1.1);
+        }
 .destacado {
 	background:#161e4a;
 	

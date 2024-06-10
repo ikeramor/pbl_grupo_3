@@ -277,6 +277,8 @@ header .logo {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+	cursor: pointer;
+    transition: transform 0.3s ease;
 }
 .instrucciones .box-container .box i {
 	height:6rem;
@@ -292,7 +294,11 @@ header .logo {
 	justify-content:center;
 }
 
-
+.instrucciones .box-container .box h3 {
+	font-size: 1.25rem;
+	color: #fff;
+	transition: .2s;
+}
 .instrucciones .box-container .box h3 a{
 	
 	font-size: 1.25rem;
@@ -302,5 +308,9 @@ header .logo {
 .instrucciones .box-container .box h3 a:hover{
 	color:##2c345e;
 	text-decoration: underline;
+	font-size:1.5rem;
 }
-	
+	.instrucciones .box-container .box:hover {
+    transform: scale(1.1);
+        }
+}

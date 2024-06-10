@@ -6,10 +6,10 @@
     <html>
       <head>
         <link rel="stylesheet" href="Politica.css" />
-        <title>Tabla de Pacientes</title>
+        <title>Tabla de Resuldados</title>
         <style>
           body {
-            background-color: #2c345e;
+            background-color: #464d7e;
             color: #fff;
             font-family: Arial, sans-serif; 
           }
@@ -70,7 +70,7 @@
             </ul>
           </nav>
         </header>
-        <h2>Tabla de Pacientes</h2>
+        <h2>Tabla de Resultados</h2>
         <table>
           <thead>
             <tr>
