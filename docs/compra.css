@@ -96,25 +96,59 @@ header .logo {
 	box-shadow:0 .3rem 1rem rgba(0,0,0,.3);
 	margin-top: 2rem;
 	border-color:#ff046f;
-	margin-left:200px; 
-	.instrucciones {
-	text-align: center;
-	background: #2c345e;
-	padding-bottom: 70px; 
+	margin-left:200px;  
 }
 /*pago*/
-
-.pagar{
+.pago {
 	text-align: center;
 	background: #2c345e;
 	padding-bottom: 70px; 
-
 }
 
-.pagar h1{
-	font-size: 3rem;
+.pago .box-container {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	text-align: center;
+}
+
+.pago .box-container .box {
+	height:20rem;
+	width:20rem;
+	background:#161e4a;
+	text-align:center;
+	border-radius:1rem;
+	box-shadow:0 .3rem 5rem rgba(0,0,0,.5);
+	margin: 2rem;
+	cursor: pointer;
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.pago .box-container .box i {
+	height:6rem;
+	width:6rem;
+	line-height: 6rem;
+	text-align: center;
+	border-radius: 50%;
+	color:#fff;
+	background:#c63bfa;
+	font-size:3rem;
+	margin: 2rem 0;
+	transition: .2s;
+	justify-content:center;
+}
+
+
+.pago .box-container .box h3 a{
+	
+	font-size: 1.25rem;
 	color: #fff;
-	text-shadow: 0 .3rem .5rem rgba(0,0,0,.3);
-	text-transform: uppercase; 
-	margin-left:50px; 
+	transition: .2s;
 }
+.pago .box-container .box h3 a:hover{
+	color:##2c345e;
+	text-decoration: underline;
+}
+	
