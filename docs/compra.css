@@ -108,7 +108,13 @@ header .logo {
 	text-align: center;
 	background: #2c345e;
 	padding-bottom: 70px; 
-	height:70vh; 
+
 }
 
-.
+.pagar h1{
+	font-size: 3rem;
+	color: #fff;
+	text-shadow: 0 .3rem .5rem rgba(0,0,0,.3);
+	text-transform: uppercase; 
+	margin-left:50px; 
+}
